@@ -1,7 +1,7 @@
 # Lab 3: Contextual Bandit-Based News Article Recommendation System
 
 **Course:** Reinforcement Learning Fundamentals  
-**Student Name:** Anant Jain 
+**Student Name:** Anant Jain  
 **Roll Number:** U20230155  
 
 
@@ -13,11 +13,25 @@ This project implements a comprehensive **Contextual Multi-Armed Bandit (CMAB)**
 
 ### 🎯 Key Results
 
-- **Best Algorithm:** Upper Confidence Bound (UCB) with C=2.0
-- **Best Average Reward:** 8.4585
-- **User Classification Accuracy:** 90.0%
+- **Best Algorithm:** Upper Confidence Bound (UCB) with C=1.0
+- **Best Average Reward:** 4.6494
+- **User Classification Accuracy:** 97.0%
 - **Time Horizon:** 10,000 steps
 - **Total Arms:** 12 (3 user contexts × 4 news categories)
+
+---
+
+## Table of Contents
+
+1. [Introduction](#introduction)
+2. [Problem Statement](#problem-statement)
+3. [Methodology](#methodology)
+4. [Results](#results)
+5. [Analysis and Insights](#analysis-and-insights)
+6. [Implementation Details](#implementation-details)
+7. [Conclusions](#conclusions)
+8. [How to Run](#how-to-run)
+9. [File Structure](#file-structure)
 
 ---
 
@@ -91,16 +105,16 @@ The assignment required building a recommendation system that:
 
 ```
                 precision    recall  f1-score   support
-        user_1       0.89      0.86      0.87       142
-        user_2       0.97      0.89      0.93       142
-        user_3       0.84      0.97      0.90       116
+        User1       0.97      0.98      0.97       666
+        User2       0.97      0.97      0.97       659
+        User3       0.97      0.96      0.97       675
     ──────────────────────────────────────────────────
-    accuracy                           0.90       400
-   macro avg       0.90      0.90      0.90       400
-weighted avg       0.90      0.90      0.90       400
+    accuracy                           0.97      2000
+   macro avg       0.97      0.97      0.97      2000
+weighted avg       0.97      0.97      0.97      2000
 ```
 
-**Key Insight:** The classifier achieves **90% accuracy**, ensuring reliable context detection for the recommendation engine.
+**Key Insight:** The classifier achieves **97% accuracy**, ensuring highly reliable context detection for the recommendation engine.
 
 ### 3. Contextual Bandit Algorithms
 
@@ -138,49 +152,53 @@ weighted avg       0.90      0.90      0.90       400
 
 ### Performance Comparison
 
-| Algorithm       | Hyperparameter | Avg Reward | Std Dev | Final Reward |
-|----------------|----------------|------------|---------|--------------|
-| Epsilon-Greedy | ε=0.01         | **8.0218** | 1.9591  | 9.9762       |
-| Epsilon-Greedy | ε=0.1          | 7.6760     | 3.1889  | 9.5790       |
-| Epsilon-Greedy | ε=0.3          | 6.1314     | 4.7849  | 10.2141      |
-| UCB            | C=0.5          | 4.1748     | 0.8231  | 3.8203       |
-| UCB            | C=1.0          | 4.1862     | 0.8279  | 4.3460       |
-| **UCB**        | **C=2.0**      | **8.4585** | 1.3261  | 8.5287       |
-| SoftMax        | τ=1.0          | 7.9382     | 1.7950  | 7.6242       |
+| Algorithm       | Hyperparameter | Avg Reward | Total Reward |
+|----------------|----------------|------------|--------------|
+| Epsilon-Greedy | ε=0.01         | **4.4865** | 44,864.70    |
+| Epsilon-Greedy | ε=0.1          | 4.1368     | 41,367.73    |
+| Epsilon-Greedy | ε=0.2          | 3.5928     | 35,927.85    |
+| UCB            | C=0.5          | 4.6339     | 46,338.83    |
+| **UCB**        | **C=1.0**      | **4.6494** | **46,493.83**|
+| UCB            | C=2.0          | 4.6213     | 46,212.77    |
+| SoftMax        | τ=0.5          | 4.5809     | 45,809.30    |
+| SoftMax        | τ=1.0          | 4.3999     | 43,999.33    |
+| SoftMax        | τ=2.0          | 3.9722     | 39,721.55    |
 
-### 🏆 Winner: UCB with C=2.0
+### 🏆 Winner: UCB with C=1.0
 
-Achieves the highest average reward of **8.4585** across 10,000 time steps.
+Achieves the highest average reward of **4.6494** across 10,000 time steps.
 
 ### Algorithm-Specific Results
 
 #### Epsilon-Greedy Results
 
-| ε    | Avg Reward | Std Dev | Interpretation |
-|------|------------|---------|----------------|
-| 0.01 | 8.0218     | 1.9591  | High exploitation, good convergence |
-| 0.1  | 7.6760     | 3.1889  | Balanced exploration-exploitation |
-| 0.3  | 6.1314     | 4.7849  | High exploration, high variance |
+| ε    | Avg Reward | Total Reward | Interpretation |
+|------|------------|--------------|----------------|
+| 0.01 | **4.4865** | 44,864.70    | High exploitation, best performance |
+| 0.1  | 4.1368     | 41,367.73    | Balanced exploration-exploitation |
+| 0.2  | 3.5928     | 35,927.85    | High exploration, lower performance |
 
-**Key Finding:** Lower ε values provide better average reward by focusing on exploitation once good arms are identified.
+**Key Finding:** Lower ε values provide better average reward. ε=0.01 achieves the best Epsilon-Greedy performance.
 
 #### UCB Results
 
-| C   | Avg Reward | Std Dev | Interpretation |
-|-----|------------|---------|----------------|
-| 0.5 | 4.1748     | 0.8231  | Too conservative, limited exploration |
-| 1.0 | 4.1862     | 0.8279  | Insufficient exploration bonus |
-| 2.0 | **8.4585** | 1.3261  | **Optimal balance, best overall** |
+| C   | Avg Reward | Total Reward | Interpretation |
+|-----|------------|--------------|----------------|
+| 0.5 | 4.6339     | 46,338.83    | Good performance, conservative exploration |
+| 1.0 | **4.6494** | **46,493.83**| **Best overall performance** |
+| 2.0 | 4.6213     | 46,212.77    | High exploration, slightly lower reward |
 
-**Key Finding:** UCB with C=2.0 provides the highest average reward. The aggressive exploration bonus enables faster convergence to optimal arms.
+**Key Finding:** UCB with C=1.0 achieves the highest average reward overall. All UCB configurations perform well, showing the robustness of the algorithm.
 
 #### SoftMax Results
 
-| τ   | Avg Reward | Std Dev |
-|-----|------------|---------|
-| 1.0 | 7.9382     | 1.7950  |
+| τ   | Avg Reward | Total Reward |
+|-----|------------|--------------|
+| 0.5 | **4.5809** | 45,809.30    |
+| 1.0 | 4.3999     | 43,999.33    |
+| 2.0 | 3.9722     | 39,721.55    |
 
-**Key Finding:** SoftMax provides competitive performance with smooth probability-based exploration.
+**Key Finding:** SoftMax with τ=0.5 provides the best SoftMax performance with competitive results. Lower temperature (more greedy) outperforms higher temperature.
 
 ### Recommendation Engine Examples
 
@@ -189,16 +207,28 @@ Achieves the highest average reward of **8.4585** across 10,000 time steps.
 2. Select Category → Apply UCB (C=2.0) → Extract Q-values → Map to news category
 3. Recommend Article → Query news database → Return article headline
 
-**Sample Recommendations:**
+**Sample Top Arms by Q-value:**
 
-- **User 1:** Context=user_2, Category=Tech  
-  → *"Watch The Top 9 YouTube Videos Of The Week..."*
+**Epsilon-Greedy (ε=0.01):**
+1. Arm 0: User1 - Entertainment (Q=6.2342)
+2. Arm 7: User2 - Crime (Q=5.6308)
+3. Arm 6: User2 - Tech (Q=3.9577)
+4. Arm 5: User2 - Education (Q=3.1353)
+5. Arm 10: User3 - Tech (Q=0.8077)
 
-- **User 2:** Context=user_1, Category=Tech  
-  → *"This Is The Robot Dallas Police Used To Kill Shooting Suspect..."*
+**UCB (C=1.0):**
+1. Arm 0: User1 - Entertainment (Q=6.2365)
+2. Arm 7: User2 - Crime (Q=5.5958)
+3. Arm 6: User2 - Tech (Q=3.9081)
+4. Arm 5: User2 - Education (Q=2.2676)
+5. Arm 10: User3 - Tech (Q=0.7942)
 
-- **User 3:** Context=user_1, Category=Tech  
-  → *"Mailbox App Gets 800,000-Person-Long Waiting List..."*
+**SoftMax (τ=0.5):**
+1. Arm 0: User1 - Entertainment (Q=6.1959)
+2. Arm 7: User2 - Crime (Q=5.5983)
+3. Arm 10: User3 - Tech (Q=0.8326)
+4. Arm 5: User2 - Education (Q=0.0000)
+5. Arm 4: User2 - Entertainment (Q=0.0000)
 
 ---
 
@@ -215,16 +245,22 @@ Achieves the highest average reward of **8.4585** across 10,000 time steps.
 ### 2. Hyperparameter Sensitivity
 
 #### Epsilon-Greedy (ε)
-- **ε=0.01:** Best (8.02), high exploitation
-- **ε=0.1:** Medium (7.68), balanced
-- **ε=0.3:** Worst (6.13), too much exploration
-- **Recommendation:** Lower values preferred
+- **ε=0.01:** Best (4.49), high exploitation
+- **ε=0.1:** Medium (4.14), balanced
+- **ε=0.2:** Worst (3.59), too much exploration
+- **Recommendation:** Lower values strongly preferred; ε=0.01 optimal
 
 #### UCB (C)
-- **C=0.5:** Poor (4.17), insufficient exploration
-- **C=1.0:** Poor (4.18), insufficient exploration
-- **C=2.0:** Excellent (8.46), optimal balance
-- **Recommendation:** Higher C better for 12-arm problem; exploration bonus critical
+- **C=0.5:** Good (4.63), conservative
+- **C=1.0:** Best (4.65), optimal balance
+- **C=2.0:** Good (4.62), aggressive exploration
+- **Recommendation:** All values perform well; C=1.0 slightly better
+
+#### SoftMax (τ)
+- **τ=0.5:** Best (4.58), greedy selection
+- **τ=1.0:** Medium (4.40), balanced
+- **τ=2.0:** Worst (3.97), too much randomness
+- **Recommendation:** Lower temperature preferred
 
 ### 3. Convergence Behavior
 
@@ -253,21 +289,200 @@ The Q-values learned by each algorithm vary by user context:
 
 This validates the **contextual bandit approach** as different user contexts genuinely have different optimal strategies.
 
+---
+
+## Implementation Details
+
+### Technical Stack
+
+**Language:** Python 3.12
+
+**Libraries:**
+- `pandas` - Data manipulation
+- `numpy` - Numerical operations
+- `scikit-learn` - Machine learning models
+- `matplotlib` & `seaborn` - Visualization
+- `rlcmab_sampler` - Reward sampling
+
+### Code Structure
+
+**Modules Implemented:**
+
+1. `EpsilonGreedyContextual` - Epsilon-greedy strategy
+2. `UCBContextual` - Upper confidence bound strategy
+3. `SoftMaxContextual` - SoftMax (Boltzmann) strategy
+4. `recommend_article()` - End-to-end recommendation pipeline
+5. `get_arm_index()` - Context-category to arm mapping
+6. `run_bandit_simulation()` - Simulation runner
+
+### Key Functions
+
+```python
+# Helper functions
+get_arm_index(user_context_idx, category_idx)  # Maps context+category to arm
+get_user_arms(user_context_idx)                 # Returns valid arms for context
+
+# Bandit classes
+EpsilonGreedyContextual(n_arms, epsilon)        # ε-greedy algorithm
+UCBContextual(n_arms, c)                        # UCB algorithm
+SoftMaxContextual(n_arms, tau)                  # SoftMax algorithm
+
+# Simulation
+run_bandit_simulation(bandit, sampler, X_test, classifier, T)
+```
+
+---
 
 ## Conclusions
 
 ### Key Findings
 
-1. **UCB algorithm with C=2.0** outperforms other strategies with **8.4585 average reward**
-2. **Epsilon-Greedy with low ε (0.01)** provides competitive performance at **8.0218**
-3. **User classification** achieves **90% accuracy**, enabling reliable contextualization
-4. **Hyperparameter selection is critical**, especially for UCB (C=2.0 vs C=1.0 shows 4.28 reward difference)
+1. **UCB algorithm with C=1.0** outperforms other strategies with **4.6494 average reward**
+2. **Epsilon-Greedy with ε=0.01** provides strong performance at **4.4865**
+3. **SoftMax with τ=0.5** achieves competitive results at **4.5809**
+4. **User classification** achieves **97% accuracy**, ensuring highly reliable contextualization
+5. **All algorithms** show consistent performance across the 10,000 time steps
+6. **UCB is most robust** with all three C values (0.5, 1.0, 2.0) performing similarly well
 
 ### Technical Insights
 
-- **Exploration vs Exploitation:** Higher exploration is beneficial in early stages; UCB's adaptive approach outperforms fixed rates
-- **Contextual Learning:** Different user contexts exhibit different reward distributions, justifying CMAB
-- **Convergence:** UCB converges faster; Epsilon-Greedy provides stability
+- **Exploration vs Exploitation:** Epsilon-Greedy benefits from low ε; UCB naturally balances exploration
+- **Contextual Learning:** 97% classification accuracy enables effective personalization
+- **Algorithm Robustness:** UCB shows consistent performance across hyperparameters (4.62-4.65 range)
+- **Convergence:** All algorithms converge within reasonable timeframes
+- **Performance Ranking:** UCB (4.6494) > SoftMax (4.5809) > Epsilon-Greedy (4.4865) for best configurations
 
+### Recommendations for Production
 
+1. **Use UCB with C=1.0** as the primary algorithm for its optimal balance
+2. **Epsilon-Greedy with ε=0.01** is a strong alternative for simplicity
+3. Monitor and **retrain user classifier** periodically as user behavior evolves (currently at 97% accuracy)
+4. Consider **ensemble approaches** combining multiple strategies
+5. Perform **A/B testing** before full deployment
+6. **All UCB configurations** (C=0.5, 1.0, 2.0) are production-ready with minimal performance difference
 
+---
+
+## How to Run
+
+### Prerequisites
+
+```bash
+pip install numpy pandas scikit-learn matplotlib seaborn
+# Install rlcmab_sampler (provided in assignment)
+```
+
+### Execution Steps
+
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd <repository-directory>
+   git checkout sohan_U20230162
+   ```
+
+2. **Prepare data:**
+   - Place `news_articles.csv`, `train_users.csv`, and `test_users.csv` in `data/` folder
+
+3. **Update roll number:**
+   - Open `master_final.ipynb`
+   - Find the cell with `ROLL_NUMBER = 1`
+   - Change to `ROLL_NUMBER = 162`
+
+4. **Run notebook:**
+   ```bash
+   jupyter notebook master_final.ipynb
+   ```
+   - Execute all cells sequentially (Kernel → Restart & Run All)
+
+5. **View results:**
+   - All plots and metrics will be generated inline
+   - Summary statistics displayed at the end
+
+### Expected Runtime
+
+- Data preprocessing: ~30 seconds
+- User classification: ~1 minute
+- Bandit simulations (9 configurations): ~5-10 minutes
+- Total: ~12-15 minutes
+
+---
+
+## File Structure
+
+```
+lab3-contextual-bandit/
+│
+├── data/
+│   ├── news_articles.csv          # News dataset (209,527 articles)
+│   ├── train_users.csv             # Training users (2,000 samples)
+│   └── test_users.csv              # Test users (2,000 samples)
+│
+├── master_final.ipynb              # Main notebook with all implementations
+├── README.md                       # This file
+├── rlcmab_sampler.py              # Reward sampler module
+│
+└── results/
+    ├── epsilon_greedy_plots.png    # ε-greedy performance
+    ├── ucb_plots.png               # UCB performance
+    ├── softmax_plots.png           # SoftMax performance
+    └── comparison_plots.png        # Algorithm comparison
+```
+
+---
+
+## Visualizations
+
+The notebook generates the following key visualizations:
+
+1. **Cumulative Rewards Over Time** - Shows total reward accumulation for each algorithm
+2. **Moving Average Rewards** - Smoothed reward trends (100-step window)
+3. **Arm Pull Distribution** - Which arms were selected most frequently
+4. **Learned Q-values** - Expected rewards for each arm
+5. **Hyperparameter Sensitivity** - Effect of ε, C, and τ on performance
+6. **Algorithm Comparison** - Best configurations head-to-head
+
+---
+
+## Future Improvements
+
+1. **Linear Contextual Bandits:** Use linear models (e.g., LinUCB) for better generalization
+2. **Thompson Sampling:** Bayesian approach with strong empirical performance
+3. **Neural Bandits:** Deep learning for complex user-item interactions
+4. **Non-stationary Bandits:** Handle changing user preferences over time
+5. **Cold Start Solutions:** Better handling of new users and new content
+6. **Feature Engineering:** Incorporate richer user and article features
+
+---
+
+## References
+
+1. Sutton, R. S., & Barto, A. G. (2018). *Reinforcement Learning: An Introduction* (2nd ed.)
+2. Auer, P., Cesa-Bianchi, N., & Fischer, P. (2002). *Finite-time analysis of the multiarmed bandit problem*
+3. Li, L., Chu, W., Langford, J., & Schapire, R. E. (2010). *A contextual-bandit approach to personalized news article recommendation*
+
+---
+
+## Contact
+
+**Student:** Anant Jain
+**Roll Number:** U20230155  
+
+---
+
+## Acknowledgments
+
+- Course Instructor for providing the assignment framework
+- `rlcmab_sampler` module authors
+- Reinforcement Learning Fundamentals teaching team
+
+---
+
+## License
+
+This project is submitted as part of academic coursework. Please refer to your institution's academic integrity policies.
+
+---
+
+**Last Updated:** February 2026  
+**Project Status:** ✅ Complete

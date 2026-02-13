@@ -21,20 +21,6 @@ This project implements a comprehensive **Contextual Multi-Armed Bandit (CMAB)**
 
 ---
 
-## Table of Contents
-
-1. [Introduction](#introduction)
-2. [Problem Statement](#problem-statement)
-3. [Methodology](#methodology)
-4. [Results](#results)
-5. [Analysis and Insights](#analysis-and-insights)
-6. [Implementation Details](#implementation-details)
-7. [Conclusions](#conclusions)
-8. [How to Run](#how-to-run)
-9. [File Structure](#file-structure)
-
----
-
 ## Introduction
 
 ### Contextual Bandit Framework
@@ -267,49 +253,6 @@ The Q-values learned by each algorithm vary by user context:
 
 This validates the **contextual bandit approach** as different user contexts genuinely have different optimal strategies.
 
----
-
-## Implementation Details
-
-### Technical Stack
-
-**Language:** Python 3.12
-
-**Libraries:**
-- `pandas` - Data manipulation
-- `numpy` - Numerical operations
-- `scikit-learn` - Machine learning models
-- `matplotlib` & `seaborn` - Visualization
-- `rlcmab_sampler` - Reward sampling
-
-### Code Structure
-
-**Modules Implemented:**
-
-1. `EpsilonGreedyContextual` - Epsilon-greedy strategy
-2. `UCBContextual` - Upper confidence bound strategy
-3. `SoftMaxContextual` - SoftMax (Boltzmann) strategy
-4. `recommend_article()` - End-to-end recommendation pipeline
-5. `get_arm_index()` - Context-category to arm mapping
-6. `run_bandit_simulation()` - Simulation runner
-
-### Key Functions
-
-```python
-# Helper functions
-get_arm_index(user_context_idx, category_idx)  # Maps context+category to arm
-get_user_arms(user_context_idx)                 # Returns valid arms for context
-
-# Bandit classes
-EpsilonGreedyContextual(n_arms, epsilon)        # ε-greedy algorithm
-UCBContextual(n_arms, c)                        # UCB algorithm
-SoftMaxContextual(n_arms, tau)                  # SoftMax algorithm
-
-# Simulation
-run_bandit_simulation(bandit, sampler, X_test, classifier, T)
-```
-
----
 
 ## Conclusions
 
@@ -326,70 +269,5 @@ run_bandit_simulation(bandit, sampler, X_test, classifier, T)
 - **Contextual Learning:** Different user contexts exhibit different reward distributions, justifying CMAB
 - **Convergence:** UCB converges faster; Epsilon-Greedy provides stability
 
-### Recommendations for Production
 
-1. **Use UCB with C=2.0** as the primary algorithm
-2. Implement **decaying exploration** for Epsilon-Greedy if used
-3. Monitor and **retrain user classifier** periodically as user behavior evolves
-4. Consider **hybrid approaches** combining multiple strategies
-5. Perform **A/B testing** before full deployment
-
----
-
-## How to Run
-
-### Prerequisites
-
-```bash
-pip install numpy pandas scikit-learn matplotlib seaborn
-# Install rlcmab_sampler (provided in assignment)
-```
-
-### Execution Steps
-
-1. **Clone the repository:**
-   ```bash
-   git clone <repository-url>
-   cd <repository-directory>
-   git checkout sohan_U20230162
-   ```
-
-2. **Prepare data:**
-   - Place `news_articles.csv`, `train_users.csv`, and `test_users.csv` in `data/` folder
-
-3. **Update roll number:**
-   - Open `master_final.ipynb`
-   - Find the cell with `ROLL_NUMBER = 1`
-   - Change to `ROLL_NUMBER = 162`
-
-4. **Run notebook:**
-   ```bash
-   jupyter notebook master_final.ipynb
-   ```
-   - Execute all cells sequentially (Kernel → Restart & Run All)
-
-5. **View results:**
-   - All plots and metrics will be generated inline
-   - Summary statistics displayed at the end
-
-### Expected Runtime
-
-- Data preprocessing: ~30 seconds
-- User classification: ~1 minute
-- Bandit simulations (9 configurations): ~5-10 minutes
-- Total: ~12-15 minutes
-
----
-
-
-## Visualizations
-
-The notebook generates the following key visualizations:
-
-1. **Cumulative Rewards Over Time** - Shows total reward accumulation for each algorithm
-2. **Moving Average Rewards** - Smoothed reward trends (100-step window)
-3. **Arm Pull Distribution** - Which arms were selected most frequently
-4. **Learned Q-values** - Expected rewards for each arm
-5. **Hyperparameter Sensitivity** - Effect of ε, C, and τ on performance
-6. **Algorithm Comparison** - Best configurations head-to-head
 

@@ -1,10 +1,9 @@
 # Lab 3: Contextual Bandit-Based News Article Recommendation System
 
 **Course:** Reinforcement Learning Fundamentals  
-**Student Name:** Sohan Panda  
-**Roll Number:** U20230162  
-**Date:** February 2026  
-**GitHub Branch:** sohan_U20230162
+**Student Name:** Anant Jain 
+**Roll Number:** U20230155  
+
 
 ---
 

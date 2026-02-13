@@ -381,28 +381,6 @@ pip install numpy pandas scikit-learn matplotlib seaborn
 
 ---
 
-## File Structure
-
-```
-lab3-contextual-bandit/
-│
-├── data/
-│   ├── news_articles.csv          # News dataset (209,527 articles)
-│   ├── train_users.csv             # Training users (2,000 samples)
-│   └── test_users.csv              # Test users (2,000 samples)
-│
-├── master_final.ipynb              # Main notebook with all implementations
-├── README.md                       # This file
-├── rlcmab_sampler.py              # Reward sampler module
-│
-└── results/
-    ├── epsilon_greedy_plots.png    # ε-greedy performance
-    ├── ucb_plots.png               # UCB performance
-    ├── softmax_plots.png           # SoftMax performance
-    └── comparison_plots.png        # Algorithm comparison
-```
-
----
 
 ## Visualizations
 
@@ -415,47 +393,3 @@ The notebook generates the following key visualizations:
 5. **Hyperparameter Sensitivity** - Effect of ε, C, and τ on performance
 6. **Algorithm Comparison** - Best configurations head-to-head
 
----
-
-## Future Improvements
-
-1. **Linear Contextual Bandits:** Use linear models (e.g., LinUCB) for better generalization
-2. **Thompson Sampling:** Bayesian approach with strong empirical performance
-3. **Neural Bandits:** Deep learning for complex user-item interactions
-4. **Non-stationary Bandits:** Handle changing user preferences over time
-5. **Cold Start Solutions:** Better handling of new users and new content
-6. **Feature Engineering:** Incorporate richer user and article features
-
----
-
-## References
-
-1. Sutton, R. S., & Barto, A. G. (2018). *Reinforcement Learning: An Introduction* (2nd ed.)
-2. Auer, P., Cesa-Bianchi, N., & Fischer, P. (2002). *Finite-time analysis of the multiarmed bandit problem*
-3. Li, L., Chu, W., Langford, J., & Schapire, R. E. (2010). *A contextual-bandit approach to personalized news article recommendation*
-
----
-
-## Contact
-
-**Student:** Anant Jain  
-**Roll Number:** U20230155  
-
----
-
-## Acknowledgments
-
-- Course Instructor for providing the assignment framework
-- `rlcmab_sampler` module authors
-- Reinforcement Learning Fundamentals teaching team
-
----
-
-## License
-
-This project is submitted as part of academic coursework. Please refer to your institution's academic integrity policies.
-
----
-
-**Last Updated:** February 2026  
-**Project Status:** ✅ Complete
